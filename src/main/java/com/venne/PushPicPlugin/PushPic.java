@@ -1,5 +1,12 @@
 package com.venne.PushPicPlugin;
 
+import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import org.quartz.JobBuilder;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -213,6 +220,13 @@ public final class PushPic extends JavaPlugin{
 		}});
 		
 		return bot;
+	}
+	
+	public String getRgbImage() throws FileNotFoundException, IOException {
+		BufferedImage bi = new BufferedImage(200,100,BufferedImage.TYPE_INT_RGB);
+		ImageIO.write(bi, "JPEG", new FileOutputStream("/data/mirai/a.jpg"));
+		
+		return "";
 	}
 	
 
