@@ -1,0 +1,36 @@
+# #开头的行全部识别为注释
+
+# exports, 允许其他插件直接使用某个类
+
+# 导出了一个internal包的一个类
+#
+exports org.example.miraiconsole.myplugin.internal.OpenInternal
+
+# 导出了整个 api 包
+#
+exports org.example.miraiconsole.myplugin.api
+
+# 保护 org.example.miraiconsole.myplugin.api2.Internal, 不允许其他插件直接使用
+#
+protects org.example.miraiconsole.myplugin.api2.Internal
+
+# 保护整个包
+#
+# 别名: protect-package
+protects org.example.miraiconsole.myplugin.internal
+
+# 此规则不会生效, 因为在此条规则之前,
+# org.example.miraiconsole.myplugin.internal 已经被加入到保护域中
+exports org.example.miraiconsole.myplugin.internal.NotOpenInternal
+
+
+# export-plugin, 允许其他插件使用除了已经被保护的全部类
+# 使用此规则会同时让此规则后的所有规则全部失效
+# 别名: export-all, export-system
+# export-plugin
+
+
+# 将整个插件放入保护域中
+# 除了此规则之前显式 export 的类, 其他插件将不允许直接使用被保护的插件的任何类
+# 别名: protect-all, protect-system
+protect-plugin
