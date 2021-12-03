@@ -24,6 +24,15 @@ public class MiraiApi{
 		return sendGroupMessage(messageChain, target);
 	}
 	
+	public static String sendOneGroupImage(String path, Long target) throws Exception {
+		List<MessageType> messageChain = new ArrayList<MessageType>();
+		MessageType mT = new MessageType();
+		mT.setPath(path);
+		mT.setType("Image");
+		messageChain.add(mT);
+		return sendGroupMessage(messageChain, target);
+	}
+	
 	public static String sendGroupMessage(List<MessageType> messageChain, Long target) throws Exception {
 		//POST
 		Map<String, Object> params=new HashMap<>();

@@ -1,9 +1,14 @@
 package com.venne.PushPicPlugin;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -30,6 +35,7 @@ import net.mamoe.mirai.event.Listener;
 import net.mamoe.mirai.event.events.BotEvent;
 import net.mamoe.mirai.event.events.FriendMessageEvent;
 import net.mamoe.mirai.event.events.GroupMessageEvent;
+import net.mamoe.mirai.message.data.Message;
 import net.mamoe.mirai.message.data.MessageChain;
 import net.mamoe.mirai.utils.BotConfiguration;
 
@@ -147,6 +153,84 @@ public final class PushPic extends JavaPlugin{
 				}
             }
             */
+            String content = g.getMessage().contentToString();
+            
+            
+            /**************调色rgb************************************/
+            if(content.equals("rgb 调色rgb")) {
+            	String nickname = g.getSenderName();
+            	g.getSubject().sendMessage("调色rgb欢迎你，"+nickname+" 你可以色色，本轮生成的色色如下，请回复rgb和3个0~255的数字(空格隔开)以匹配色色");
+            	
+            	//生成色图
+            	Random ran = new Random();
+            	
+            	int redO = 0;int greenO = 0;int blueO = 0;
+            	redO = ran.nextInt(255);
+            	greenO = ran.nextInt(255);
+            	blueO = (int) (System.currentTimeMillis() % 255);
+            	getLogger().info("redO: " + redO);
+            	getLogger().info("greenO: " + greenO);
+            	getLogger().info("blueO: " + blueO);
+            	
+            	String path = "";
+            	try {
+					path = getRgbImage(redO, greenO, blueO, g.getSender().getId());
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+            	
+            	if(!path.equals("")) {
+            		//发送图片
+            		try {
+            			getLogger().info("path: " + path);
+						MiraiApi.sendOneGroupImage(path, (long) 853023498);
+					} catch (Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+            	}
+            }else if(content.startsWith("rgb ")) {
+            	getLogger().info("rgb 回复: " + content);
+            	List<String> result =  Arrays.asList(content.split(" "));
+            	result.forEach(str ->{
+            		getLogger().info("rgb 回复分割: " + str);
+            		if(str.equals("rgb")) {
+            			
+            		}else if(CommonUtil.isNumeric(str)) {
+            			
+            		}else {//不是数字
+            			str = "0";
+            		}
+            		
+            	});
+            	int red = Integer.valueOf(result.get(1));
+            	int green = Integer.valueOf(result.get(2));
+            	int blue = Integer.valueOf(result.get(3));
+            	//范围修正
+            	if(red > 255) {
+            		red = 255;
+            	}
+            	if(green > 255) {
+            		green = 255;
+            	}
+            	if(blue > 255) {
+            		blue = 255;
+            	}
+            	
+            	//获取对应用户rgb
+            	
+            	//计算分数
+            	//int score = CommonUtil.abs(redO - red) + CommonUtil.abs(greenO - green) + CommonUtil.abs(blueO- blue); 
+            	//score = 255*3 - score;
+            	//getLogger().info("score: " + score);
+            	g.getSubject().sendMessage(g.getSenderName() + " 填充的色色是："+ red + " " + green + " "+ blue);
+            }
+            
+            /**************调色rgb************************************/
             
 
         });
@@ -222,13 +306,32 @@ public final class PushPic extends JavaPlugin{
 		return bot;
 	}
 	
-	public String getRgbImage() throws FileNotFoundException, IOException {
+	public String getRgbImage(int r, int g, int b, long userId) throws FileNotFoundException, IOException {
 		BufferedImage bi = new BufferedImage(200,100,BufferedImage.TYPE_INT_RGB);
-		ImageIO.write(bi, "JPEG", new FileOutputStream("/data/mirai/a.jpg"));
 		
-		return "";
+		//取得图形
+		Graphics gr = bi.getGraphics();
+		
+		//设置颜色
+		gr.setColor(new Color(r, g, b));
+		
+		//填充
+		gr.fillRect(0, 0, bi.getWidth(), bi.getHeight());
+		
+		//创建文件
+		String path = "/data/mirai/"+userId+".jpg";
+		ImageIO.write(bi, "JPEG", new FileOutputStream(path));
+			
+		return path;
 	}
 	
+	public String readUser() {
+		return null;
+	}
+	
+	public void writeUser() {
+		
+	}
 
 
 }

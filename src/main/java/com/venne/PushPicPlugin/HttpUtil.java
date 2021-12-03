@@ -18,7 +18,7 @@ public class HttpUtil {
 
     public static String post(String requestUrl, String params)
             throws Exception {
-        String contentType = "application/x-www-form-urlencoded";
+        String contentType = "application/json";
         return HttpUtil.post(requestUrl, contentType, params);
     }
 
