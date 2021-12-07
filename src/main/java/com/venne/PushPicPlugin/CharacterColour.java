@@ -13,12 +13,30 @@ public class CharacterColour{
 	private int def=0;
 	private int spd=0;
 	
-	private int exp=0;
+	private long exp=0;
 	private int level=1;
 	private int special=0;
 	
 	private String name="";
 	private String avatar="";
+	
+	private long qqId;
+	
+	private int times;
+	
+	public int getTimes() {
+		return times;
+	}
+	public void setTimes(int times) {
+		this.times = times;
+	}
+	
+	public long getQqId() {
+		return qqId;
+	}
+	public void setQqId(long qqId) {
+		this.qqId = qqId;
+	}
 	
 	public String getName() {
 		return name;
@@ -33,7 +51,7 @@ public class CharacterColour{
 		this.avatar = avatar;
 	}
 	
-	public int getExp() {
+	public long getExp() {
 		return exp;
 	}
 	public int getLevel() {
@@ -42,7 +60,7 @@ public class CharacterColour{
 	public int getSpecial() {
 		return special;
 	}
-	public void setExp(int exp) {
+	public void setExp(long exp) {
 		this.exp = exp;
 	}
 	public void setLevel(int level) {
