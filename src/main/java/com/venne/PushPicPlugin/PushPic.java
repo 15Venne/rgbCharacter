@@ -66,6 +66,26 @@ public final class PushPic extends JavaPlugin{
 	
 	private static boolean qyqxIsLive=false;
 	private static boolean quinIsLive=false;
+	private static boolean suiyoubiLive=false;
+	
+	private static Sentence sentence=null;
+	
+	public static Sentence getSentence() {
+		if(sentence == null) {
+			sentence = new Sentence();
+		}
+		return sentence;
+	}
+	public static void setSentence(Sentence sentence) {
+		PushPic.sentence = sentence;
+	}
+	
+	public static boolean getSuiyoubiLive() {
+		return suiyoubiLive;
+	}
+	public static void setSuiyoubiLive(boolean suiyoubiLive) {
+		PushPic.suiyoubiLive = suiyoubiLive;
+	}
 	
 	public static boolean getQyqxIsLive() {
 		return qyqxIsLive;
@@ -405,6 +425,15 @@ public final class PushPic extends JavaPlugin{
             }
             
             /**************调色rgb************************************/
+            
+            /**************一句话************************************/
+            if(g.getMessage().contentToString().equals("一句话")) {
+            	 Random random = new Random();
+            	 int n = random.nextInt(getSentence().s.size());
+            	String senStr = getSentence().s.get(n);
+            	g.getGroup().sendMessage(senStr);
+            }
+            /**************一句话************************************/
             
 
         });

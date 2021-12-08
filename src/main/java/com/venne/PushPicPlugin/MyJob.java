@@ -18,10 +18,10 @@ public class MyJob implements Job{
 		
 		
 		String result = HttpUtil.sendGet(LiveApi.ACFUN_LIVE_API, "userId=" + LiveApi.QYQX_USERID);
-		System.out.println("查询了1次");
+		System.out.println("秋先查询了1次");
 		JSONObject joj =  JSONObject.parseObject(result);
 		
-		System.out.println(result);
+		//System.out.println(result);
 		
 		
 		if(result.contains("liveId")) {
@@ -52,6 +52,40 @@ public class MyJob implements Job{
 				PushPic.setQyqxIsLive(false);
 			}
 		}
+		System.out.println("***************************************");
+		//水姐
+		String result1001 = HttpUtil.sendGet(LiveApi.ACFUN_LIVE_API, "userId=" + LiveApi.PROJECT1001_USERID);
+		System.out.println("水姐查询了1次");
+		//System.out.println(result1001);
+		if(result1001.contains("liveId")) {
+			//判断是否已开播
+			if(!PushPic.getSuiyoubiLive()) {
+				System.out.println("MyJob ===>1001project change 开播了！");
+				//发通知
+				try {
+					PushPic.sendNotice("水姐 开播咯 https://live.acfun.cn/live/179922");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				//更改变量
+				PushPic.setSuiyoubiLive(true);
+			}			
+		}else {//下播
+			if(PushPic.getSuiyoubiLive()) {
+				System.out.println("MyJob --->1001project change 下播了！");			
+				//发通知
+				try {
+					PushPic.sendNotice("水姐 下播咯");
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}		
+				//更改变量
+				PushPic.setSuiyoubiLive(false);
+			}
+		}
+		
 		System.out.println("***************************************");
 		
 		

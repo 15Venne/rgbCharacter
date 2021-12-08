@@ -10,6 +10,8 @@ public class LiveApi{
 	
 	public static final String QYQX_USERID = "378269";
 	
+	public static final String PROJECT1001_USERID = "179922";
+	
 	
 	
 	

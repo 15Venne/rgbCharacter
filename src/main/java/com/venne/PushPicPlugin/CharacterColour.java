@@ -24,6 +24,15 @@ public class CharacterColour{
 	
 	private int times;
 	
+	private int san;
+	
+	public int getSan() {
+		return san;
+	}
+	public void setSan(int san) {
+		this.san = san;
+	}
+	
 	public int getTimes() {
 		return times;
 	}
